@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CinemaTime.Models.ViewModel;
 
 namespace CinemaTime.Areas.Customer.Controllers;
-
+[Area(SD.CustomerArea)]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

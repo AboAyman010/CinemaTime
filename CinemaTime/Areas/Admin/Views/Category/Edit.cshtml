@@ -1,0 +1,21 @@
+﻿@model Category;
+
+<div class="container">
+    <div class="row my-3">
+        <div class=" col-12">
+            <form  method="post">
+                <div class="mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="Name"  placeholder="Enter Name" value="@Model.Name">
+                </div>
+                <div class="mb-3">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="Description" placeholder="Enter Description" value="@Model.Description">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>

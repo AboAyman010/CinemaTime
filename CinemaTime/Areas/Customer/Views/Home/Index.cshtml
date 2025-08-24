@@ -160,7 +160,7 @@
 
                 }
                
-
+                @* pagination *@
             </div>
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
@@ -168,26 +168,26 @@
                         <ul class="pagination">
                             @if (ViewBag.CurrentPage != 1)
                             {
-                                <li class="page-item"><a class="page-link" href="/Home/Index?page=@(@ViewBag.CurrentPage-1)">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="/Customer/Home/Index?page=@(@ViewBag.CurrentPage-1)">Previous</a></li>
 
                             }
                             @for (var i = 1; i <= ViewBag.totalPages; i++)
                             {
                                 if (i == ViewBag.CurrentPage)
                                 {
-                                    <li class="page-item active"><a class="page-link" href="/Home/Index?page=@i&MovieTitle=@ViewBag.MovieTitle">@i</a></li>
+                                    <li class="page-item active"><a class="page-link" href="/Customer/Home/Index?page=@i&MovieTitle=@ViewBag.MovieTitle">@i</a></li>
 
                                 }
                                 else
                                 {
-                                    <li class="page-item"><a class="page-link" href="/Home/Index?page=@i&CategoryId=@ViewBag.CategoryId">@i</a></li>
+                                    <li class="page-item"><a class="page-link" href="/Customer/Home/Index?page=@i&CategoryId=@ViewBag.CategoryId">@i</a></li>
 
                                 }
 
                             }
                             @if (ViewBag.totalPages != ViewBag.CurrentPage)
                             {
-                                <li class="page-item"><a class="page-link" href="/Home/Index?page=@(@ViewBag.CurrentPage+1)">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="/Customer/Home/Index?page=@(@ViewBag.CurrentPage+1)">Next</a></li>
 
                             }
                         </ul>
