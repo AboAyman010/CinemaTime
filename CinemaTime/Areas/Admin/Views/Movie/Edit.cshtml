@@ -1,0 +1,49 @@
+﻿@model Movie;
+
+<div class="container">
+    <div class="row my-3">
+        <div class=" col-12">
+            <form method="post">
+                <div class="mb-3">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="Title" placeholder="Enter Title" value="@Model.Title">
+                </div>
+                <div class="mb-3">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="Description" placeholder="Enter Description" value="@Model.Description">
+                </div>
+                <div class="mb-3">
+                    <label for="duration">Duration</label>
+                    <input type="text" class="form-control" id="duration" name="Duration" placeholder="Enter Duration" value="@Model.Duration">
+                </div>
+                <div class="mb-3">
+                    <label for="releaseDate">ReleaseDate</label>
+                    <input type="text" class="form-control" id="releaseDate" name="ReleaseDate" placeholder="Enter ReleaseDate" value="@Model.ReleaseDate">
+                </div>
+              
+                <div class="mb-3">
+                    <label for="language">Language</label>
+                    <input type="text" class="form-control" id="language" name="Language" placeholder="Enter Language" value="@Model.Language">
+                </div>
+                <div class="mb-3">
+                    <label for="posterUrl">PosterUrl</label>
+                    <input type="text" class="form-control" id="posterUrl" name="PosterUrl" placeholder="Enter PosterUrl" value="@Model.PosterUrl">
+                </div>
+                <div class="mb-3">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price" name="Price" placeholder="Enter Price" value="@Model.Price">
+                </div>
+                <div class="mb-3">
+                    <label for="rating">Rating</label>
+                    <input type="text" class="form-control" id="rating" name="Rating" placeholder="Enter Rating" value="@Model.Rating">
+                </div>
+                <div class="mb-3">
+                    <label for="categoryId">CategoryId</label>
+                    <input type="text" class="form-control" id="categoryId" name="CategoryId" placeholder="Enter Category" value="@Model.CategoryId">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>
