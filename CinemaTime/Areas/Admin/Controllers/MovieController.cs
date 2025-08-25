@@ -19,8 +19,6 @@ namespace CinemaTime.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var Movies = _context.Movies.Include(m => m.Sessions)
-        .ThenInclude(s => s.Hall);
             return View();
         }
         [HttpPost]
