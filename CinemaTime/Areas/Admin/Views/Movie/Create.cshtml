@@ -1,5 +1,4 @@
-﻿@model Movie;
-
+﻿@model CinemaTime.Models.ViewModel.CategoryWithSessionVM
 <div class="container">
     <div class="row my-3">
         <div class=" col-12">
@@ -13,18 +12,15 @@
                     <input type="text" class="form-control" id="description" name="Description" placeholder="Enter Description">
                 </div>
 
-              
-                <div class="mb-3">
-                    <label for="duration">StartTime</label>
-                    <input type="text" class="form-control" id="startTime" name="StartTime" placeholder="Enter StartTime">
-                </div>
+
+               
                 <div class="mb-3">
                     <label for="releaseDate">ReleaseDate</label>
                     <input type="text" class="form-control" id="releaseDate" name="ReleaseDate" placeholder="Enter ReleaseDate">
                 </div>
-              
 
-               
+
+
                 <div class="mb-3">
                     <label for="language">Language</label>
                     <input type="text" class="form-control" id="language" name="Language" placeholder="Enter Language">
@@ -42,10 +38,17 @@
                     <input type="text" class="form-control" id="rating" name="Rating" placeholder="Enter Rating">
                 </div>
                 <div class="mb-3">
-                    <label for="categoryId">CategoryId</label>
-                    <input type="text" class="form-control" id="categoryId" name="CategoryId" placeholder="Enter Category">
+                    <label for="categoryId">Category</label>
+                    <select name="CategoryId" class="form-select">
+                        @foreach (var item in Model.Categories)
+                        {
+                             <option value="@item.CategoryId">@item.Name</option>
+                        }
+                    </select>
+                    
                 </div>
-
+               
+               
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

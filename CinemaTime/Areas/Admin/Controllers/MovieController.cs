@@ -1,5 +1,6 @@
 ﻿using CinemaTime.DataAccess;
 using CinemaTime.Models;
+using CinemaTime.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,13 @@ namespace CinemaTime.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var categories = _context.Categorys;
+            var Sessions = _context.Sessions;
+            CategoryWithSessionVM categoryWithSessionVM = new()
+            {
+                Categories = categories.ToList(),
+            };
+            return View(categoryWithSessionVM);
         }
         [HttpPost]
         public IActionResult Create(Movie movie)
