@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row my-3">
         <div class=" col-12">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name">Title</label>
                     <input type="text" class="form-control" id="title" name="Title" placeholder="Enter Title">
@@ -24,11 +24,27 @@
                 <div class="mb-3">
                     <label for="language">Language</label>
                     <input type="text" class="form-control" id="language" name="Language" placeholder="Enter Language">
-                </div> 
+                </div>
                 <div class="mb-3">
                     <label for="posterUrl">PosterUrl</label>
-                    <input type="text" class="form-control" id="posterUrl" name="PosterUrl" placeholder="Enter PosterUrl">
-                </div> 
+                    <input type="file" class="form-control" id="posterUrl" name="PosterUrl" accept="image/*" onchange="previewImage(event)">
+                </div>
+
+                <!-- صورة العرض المبدئي -->
+                <div class="mb-3">
+                    <img id="preview" src="#" alt="Preview" style="max-width: 200px; display: none; border: 1px solid #ccc; padding: 5px; margin-top:10px;" />
+                </div>
+                <script>
+                    function previewImage(event) {
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            var output = document.getElementById('preview');
+                            output.src = reader.result;
+                            output.style.display = 'block'; // يخلي الصورة تظهر بعد اختيارها
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+                </script>
                 <div class="mb-3">
                     <label for="price">Price</label>
                     <input type="text" class="form-control" id="price" name="Price" placeholder="Enter Price">
