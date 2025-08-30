@@ -1,14 +1,18 @@
-﻿<div class="container">
+﻿@model Category
+<div class="container">
     <div class="row my-3">
         <div class=" col-12">
             <form method="post">
                 <div class="mb-3">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="Name" aria-describedby="emailHelp" placeholder="Enter Name">
+                    <input  class="form-control"   placeholder="Enter Name" asp-for="Name">
+                    <span class="text-danger" asp-validation-for="@Model.Name" ></span>
                 </div>
                 <div class="mb-3">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" name="Description" placeholder="Enter Description">
+                    <input  class="form-control" placeholder="Enter Description" asp-for="Description">
+                    <span class="text-danger" asp-validation-for="@Model.Description"></span>
+
                 </div>
                
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -17,3 +21,8 @@
     </div>
   
 </div>
+@section Scripts {
+    <partial name="_NotifactionPartial" />
+    <partial name="_ValidationScriptsPartial" />
+
+}

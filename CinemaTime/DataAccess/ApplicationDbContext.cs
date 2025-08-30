@@ -92,6 +92,17 @@ namespace CinemaTime.DataAccess
     .Property(m => m.Price)
     .HasColumnType("decimal(18,2)");
 
+            modelBuilder.Entity<Payment>()
+              .Property(p => p.Amount)
+              .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Session>()
+                .Property(s => s.Price)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Ticket>()
+                .Property(t => t.Price)
+                .HasColumnType("decimal(18,2)");
 
 
             modelBuilder.Entity<MovieActor>()

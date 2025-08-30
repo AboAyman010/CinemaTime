@@ -89,21 +89,24 @@
                                     <!-- Duration-->
                                     <p><strong> : الجلسات</strong></p>
                                     <ul>
-                                        @foreach (var session in item.Sessions){
-
-
-                                            <p> @session.StartTime.ToString("hh:mm") 
-                                                @(session.StartTime.Hour < 12 ? "AM" : "PM")
-
-                                                <strong> : بداية الجلسة</strong>
-                                            </p>
-                                            <p>@session.EndTime.ToString("hh:mm")
-                                                @(session.EndTime.Hour < 12 ? "AM" : "PM")
-                                                <strong> : نهاية الجلسة</strong></p>
-
-                                            <p>  @session.Hall.Name  <strong> : القاعة</strong></p>
-                                            <p> $@session.Price<strong>: سعر التذكرة </strong></p>
-
+                                      @foreach (var session in item.Sessions)
+                             {
+        
+            <p>
+                @session.StartTime.ToString("hh:mm tt")
+                <strong>: بداية الجلسة</strong>
+            </p>
+            <p>
+                @session.EndTime.ToString("hh:mm tt")
+                <strong>: نهاية الجلسة</strong>
+            </p>
+            <p>
+                @session.Hall.Name <strong>: القاعة</strong>
+            </p>
+            <p>
+                $@session.Price <strong>: سعر التذكرة</strong>
+            </p>
+                                            
 
                                         }
 

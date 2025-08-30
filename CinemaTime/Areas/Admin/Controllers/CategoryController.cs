@@ -1,34 +1,56 @@
 ﻿using CinemaTime.DataAccess;
+using CinemaTime.IRepositories;
 using CinemaTime.Models;
+using CinemaTime.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Core.Types;
+using System.Threading.Tasks;
+
 
 namespace CinemaTime.Areas.Admin.Controllers
 {
     [Area(SD.AdminArea)]
     public class CategoryController : Controller
     {
-        private ApplicationDbContext _context = new();
-        public IActionResult Index()
+        //private ApplicationDbContext _context = new();
+        private IRepository<Category> _categoryRepositories;//= new Repository<Category>();
+        public CategoryController(IRepository<Category> categoryRepositories)
         {
-            var categorys = _context.Categorys;
-            return View(categorys.ToList());
+            _categoryRepositories = categoryRepositories;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var categorys =  await  _categoryRepositories.GetAsync();
+            return View(categorys);
         }
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new Category());
         }
         [HttpPost]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
-            _context.Categorys.Add(category);
-            _context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(e => e.Errors);
+                TempData["error-notification"] = String.Join(", ", errors.Select(e => e.ErrorMessage));
+                return View(category);
+            }
+            await _categoryRepositories.CreateAsync(category);
+            await _categoryRepositories.CommitAsync();
+             TempData["success-notification"] = "Add Category Successfully";
+            Response.Cookies.Append("success-notification", "Add Category Successfully", new()
+            {
+                Secure = true,
+                Expires = DateTime.Now.AddDays(1)
+            });
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-           var category= _context.Categorys.FirstOrDefault(e => e.CategoryId == id);
+            var category = await _categoryRepositories.GetOneAsync(e => e.CategoryId==id);
             if(category is null)
             {
                 return RedirectToAction(SD.NotFoundPage, SD.HomeController);
@@ -36,21 +58,24 @@ namespace CinemaTime.Areas.Admin.Controllers
             return View(category);
         }
         [HttpPost]
-        public IActionResult Edit(Category category)
+        public async Task<IActionResult> Edit(Category category)
         {
-            _context.Categorys.Update(category);
-            _context.SaveChanges();
+           _categoryRepositories.Update(category);
+            await _categoryRepositories.CommitAsync();
+            TempData["success-notification"] = "Update Category Successfully";
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = _context.Categorys.FirstOrDefault(e => e.CategoryId == id);
+            var category = await _categoryRepositories.GetOneAsync(e => e.CategoryId == id);
             if (category is null)
             
                 return RedirectToAction(SD.NotFoundPage, SD.HomeController);
-            
-            _context.Categorys.Remove(category);
-            _context.SaveChanges();
+
+            _categoryRepositories.Delete(category);
+            await _categoryRepositories.CommitAsync();
+
+            TempData["success-notification"] = "Delete Category Successfully";
             return RedirectToAction(nameof(Index));
         }
     }   

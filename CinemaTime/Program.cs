@@ -1,3 +1,6 @@
+using CinemaTime.Models;
+using CinemaTime.Repositories.IRepositories;
+
 namespace CinemaTime
 {
     public class Program
@@ -8,6 +11,9 @@ namespace CinemaTime
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
+            builder.Services.AddScoped< IMovieRepositories,MovieRepositories>();
+
 
             var app = builder.Build();
 

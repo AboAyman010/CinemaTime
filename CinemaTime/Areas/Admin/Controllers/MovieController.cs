@@ -4,6 +4,7 @@ using CinemaTime.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace CinemaTime.Areas.Admin.Controllers
 {
@@ -11,26 +12,36 @@ namespace CinemaTime.Areas.Admin.Controllers
 
     public class MovieController : Controller
     {
-        private ApplicationDbContext _context = new();
+        //private ApplicationDbContext _context = new();
+        private IMovieRepositories _movieRepositories;//= new MovieRepositories();
+        private IRepository<Category> _categoryRepositories; //= new Repository<Category>();
 
-        public IActionResult Index()
+        public MovieController(IMovieRepositories movieRepositories,
+           IRepository<Category> categoryRepositories)
         {
-           var Movies= _context.Movies;
-            return View(Movies.ToList());
+            _movieRepositories = movieRepositories;
+            _categoryRepositories = categoryRepositories;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var movies = await _movieRepositories.GetAsync(includes: [e => e.Category]);
+            return View(movies);
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var categories = _context.Categorys;
-            var Sessions = _context.Sessions;
+            var categories =await _categoryRepositories.GetAsync();
+          
             CategoryWithSessionVM categoryWithSessionVM = new()
             {
                 Categories = categories.ToList(),
+
             };
             return View(categoryWithSessionVM);
         }
         [HttpPost]
-        public IActionResult Create(Movie movie, IFormFile PosterUrl)
+        public async Task<IActionResult> Create(Movie movie, IFormFile PosterUrl)
         {
             //save img in wwwrot
             if (PosterUrl is not null && PosterUrl.Length > 0)
@@ -44,16 +55,16 @@ namespace CinemaTime.Areas.Admin.Controllers
                     PosterUrl.CopyToAsync(stream);
                 }
                 movie.PosterUrl = fileName;
-                _context.Movies.Add(movie);
-                _context.SaveChanges();
+              await  _movieRepositories.CreateAsync(movie);
+                await _movieRepositories.CommitAsync();
                 return RedirectToAction(nameof(Index));
             }
             return BadRequest();
          
         }
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var Movies = _context.Movies.FirstOrDefault(e => e.MovieId == id);
+            var Movies = await _movieRepositories.GetOneAsync(e => e.MovieId == id);
             if (Movies is null)
             {
                 return RedirectToAction(SD.NotFoundPage, SD.HomeController);
@@ -61,9 +72,10 @@ namespace CinemaTime.Areas.Admin.Controllers
             return View(Movies);
         }
         [HttpPost]
-        public IActionResult Edit(Movie movie, IFormFile? PosterUrl)
+        public async Task<IActionResult> Edit(Movie movie, IFormFile? PosterUrl)
         {
-            var moviesInDb=_context.Movies.AsNoTracking().FirstOrDefault(e => e.MovieId == movie.MovieId );
+            //   var moviesInDb=_context.Movies.AsNoTracking().FirstOrDefault(e => e.MovieId == movie.MovieId );
+            var moviesInDb =  await   _movieRepositories.GetOneAsync(e => e.MovieId == movie.MovieId, tracked: false);
             if(moviesInDb is null)
             {
                 return BadRequest();
@@ -91,22 +103,23 @@ namespace CinemaTime.Areas.Admin.Controllers
             }
             else
             {
-                movie.PosterUrl = moviesInDb.PosterUrl;
+                movie.PosterUrl = moviesInDb.PosterUrl; 
             }
 
-                _context.Movies.Update(movie);
-            _context.SaveChanges();
+            _movieRepositories.Update(movie);
+            await _movieRepositories.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var Movies = _context.Movies.FirstOrDefault(e => e.MovieId == id);
+            var Movies = await _movieRepositories.GetOneAsync(e => e.MovieId == id);
             if (Movies is null)
 
                 return RedirectToAction(SD.NotFoundPage, SD.HomeController);
 
-            _context.Movies.Remove(Movies);
-            _context.SaveChanges();
+
+            _movieRepositories.Delete(Movies);
+            await _movieRepositories.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
     }

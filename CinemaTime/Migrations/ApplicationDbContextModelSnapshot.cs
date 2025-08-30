@@ -40,7 +40,7 @@ namespace CinemaTime.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actor", (string)null);
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Category", b =>
@@ -61,7 +61,7 @@ namespace CinemaTime.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categorys");
+                    b.ToTable("Categorys", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.CinemaHall", b =>
@@ -91,7 +91,7 @@ namespace CinemaTime.Migrations
 
                     b.HasKey("CinemaHallId");
 
-                    b.ToTable("CinemaHalls");
+                    b.ToTable("CinemaHalls", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Movie", b =>
@@ -137,7 +137,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.MovieActor", b =>
@@ -152,7 +152,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MovieActor");
+                    b.ToTable("MovieActor", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.MovieImage", b =>
@@ -174,7 +174,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieImages");
+                    b.ToTable("MovieImages", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Payment", b =>
@@ -207,7 +207,7 @@ namespace CinemaTime.Migrations
                     b.HasIndex("TicketId")
                         .IsUnique();
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Seat", b =>
@@ -238,7 +238,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("CinemaHallId");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Session", b =>
@@ -270,7 +270,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Sessions");
+                    b.ToTable("Sessions", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Ticket", b =>
@@ -308,7 +308,7 @@ namespace CinemaTime.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.User", b =>
@@ -341,7 +341,7 @@ namespace CinemaTime.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Movie", b =>

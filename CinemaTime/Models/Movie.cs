@@ -1,4 +1,6 @@
-﻿namespace CinemaTime.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CinemaTime.Models
 {
     public class Movie
     {
@@ -10,6 +12,8 @@
         public DateTime ReleaseDate { get; set; }
         public string Language { get; set; }
         public string PosterUrl { get; set; }// البوستر الأساسي
+
+      
         public decimal Price { get; set; }
 
         public float Rating { get; set; }
