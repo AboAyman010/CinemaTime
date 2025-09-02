@@ -1,12 +1,18 @@
 ﻿using CinemaTime.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Numerics;
 
 namespace CinemaTime.DataAccess
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+        {
+        }
+
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Actor> Actors { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
@@ -17,11 +23,7 @@ namespace CinemaTime.DataAccess
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
-        }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -118,6 +120,15 @@ namespace CinemaTime.DataAccess
                 .HasOne(ma => ma.Actor)
                 .WithMany(a => a.MovieActors)
                 .HasForeignKey(ma => ma.ActorId);
+        }
+        public ApplicationDbContext()
+        {
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
         }
     }
 }

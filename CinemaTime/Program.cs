@@ -1,5 +1,9 @@
+using CinemaTime.DataAccess;
 using CinemaTime.Models;
 using CinemaTime.Repositories.IRepositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace CinemaTime
 {
@@ -11,6 +15,19 @@ namespace CinemaTime
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(Option=>
+            {
+                Option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Option =>
+            {
+                Option.Password.RequiredLength = 8;
+                Option.Password.RequireNonAlphanumeric = false;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
             builder.Services.AddScoped< IMovieRepositories,MovieRepositories>();
 

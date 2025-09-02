@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaTime.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250819122122_SeedPaymentData")]
-    partial class SeedPaymentData
+    [Migration("20250902104356_SeedActorData")]
+    partial class SeedActorData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,28 @@ namespace CinemaTime.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CinemaTime.Models.Actor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Actor", (string)null);
+                });
+
             modelBuilder.Entity("CinemaTime.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -35,11 +57,13 @@ namespace CinemaTime.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CategoryId");
 
@@ -102,6 +126,9 @@ namespace CinemaTime.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<float>("Rating")
                         .HasColumnType("real");
 
@@ -117,6 +144,21 @@ namespace CinemaTime.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("CinemaTime.Models.MovieActor", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "ActorId");
+
+                    b.HasIndex("ActorId");
+
+                    b.ToTable("MovieActor");
                 });
 
             modelBuilder.Entity("CinemaTime.Models.MovieImage", b =>
@@ -319,6 +361,25 @@ namespace CinemaTime.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("CinemaTime.Models.MovieActor", b =>
+                {
+                    b.HasOne("CinemaTime.Models.Actor", "Actor")
+                        .WithMany("MovieActors")
+                        .HasForeignKey("ActorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CinemaTime.Models.Movie", "Movie")
+                        .WithMany("MovieActors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("CinemaTime.Models.MovieImage", b =>
                 {
                     b.HasOne("CinemaTime.Models.Movie", "Movie")
@@ -398,6 +459,11 @@ namespace CinemaTime.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CinemaTime.Models.Actor", b =>
+                {
+                    b.Navigation("MovieActors");
+                });
+
             modelBuilder.Entity("CinemaTime.Models.Category", b =>
                 {
                     b.Navigation("Movies");
@@ -413,6 +479,8 @@ namespace CinemaTime.Migrations
             modelBuilder.Entity("CinemaTime.Models.Movie", b =>
                 {
                     b.Navigation("AdditionalImages");
+
+                    b.Navigation("MovieActors");
 
                     b.Navigation("Sessions");
                 });

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CinemaTime.Models
 {
+    [Table("Categorys")]
     public class Category
     {
         public int CategoryId { get; set; }

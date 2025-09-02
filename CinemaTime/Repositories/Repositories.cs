@@ -12,8 +12,9 @@ namespace CinemaTime.IRepositories
         private ApplicationDbContext _context = new();
         private DbSet<T> _db;
 
-        public Repository()
+        public Repository(ApplicationDbContext context)
         {
+            _context = context;
             _db = _context.Set<T>();
         }
 

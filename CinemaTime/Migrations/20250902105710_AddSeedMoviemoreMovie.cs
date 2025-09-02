@@ -5,12 +5,11 @@
 namespace CinemaTime.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNewMovies : Migration
+    public partial class AddSeedMoviemoreMovie : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // Movie 1
             migrationBuilder.Sql(@"
         INSERT INTO Movies 
         (Title, Description, Duration, ReleaseDate, Language, Rating, PosterUrl, CategoryId, Price) 
@@ -42,8 +41,6 @@ namespace CinemaTime.Migrations
         ('Joker', 'Psychological thriller', 122, '2019-10-04', 'English', 8.5, 'poster4.jpg', 3, 110.00)
     ");
         }
-
-        
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)

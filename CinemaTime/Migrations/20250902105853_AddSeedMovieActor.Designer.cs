@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaTime.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250821125118_SeedActorData")]
-    partial class SeedActorData
+    [Migration("20250902105853_AddSeedMovieActor")]
+    partial class AddSeedMovieActor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace CinemaTime.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Photo")
                         .IsRequired()
@@ -43,7 +44,7 @@ namespace CinemaTime.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actor");
+                    b.ToTable("Actor", (string)null);
                 });
 
             modelBuilder.Entity("CinemaTime.Models.Category", b =>
@@ -56,11 +57,13 @@ namespace CinemaTime.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CategoryId");
 
