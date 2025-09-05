@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Numerics;
+using CinemaTime.Models.ViewModel;
 
 namespace CinemaTime.DataAccess
 {
@@ -23,7 +24,8 @@ namespace CinemaTime.DataAccess
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
-       
+        public DbSet<UserOTP> UserOTPs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -130,5 +132,8 @@ namespace CinemaTime.DataAccess
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
         }
+        public DbSet<CinemaTime.Models.ViewModel.NewPasswordVM> NewPasswordVM { get; set; } = default!;
+      
+      
     }
 }

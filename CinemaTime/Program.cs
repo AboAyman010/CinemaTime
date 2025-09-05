@@ -2,6 +2,7 @@ using CinemaTime.DataAccess;
 using CinemaTime.Models;
 using CinemaTime.Repositories.IRepositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,10 +27,15 @@ namespace CinemaTime
                 Option.Password.RequiredLength = 8;
                 Option.Password.RequireNonAlphanumeric = false;
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
             builder.Services.AddScoped< IMovieRepositories,MovieRepositories>();
+            builder.Services.AddScoped<IRepository<UserOTP>, Repository<UserOTP>>();
+
 
 
             var app = builder.Build();
