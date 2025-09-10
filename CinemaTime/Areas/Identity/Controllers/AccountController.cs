@@ -27,8 +27,13 @@ namespace CinemaTime.Areas.Identity.Controllers
 
         }
         [HttpGet]
+        [UserAuthenticatedFilter]
         public IActionResult Register()
         {
+           if (User.Identity.IsAuthenticated)
+            {
+
+            }
             return View();
         }
         [HttpPost]
@@ -42,7 +47,10 @@ namespace CinemaTime.Areas.Identity.Controllers
             {
                 Name = registerVM.Name,
                 Email = registerVM.Email,
-                Address = registerVM.Address,
+                City = registerVM.City,
+                Street = registerVM.Street,
+                State = registerVM.State,
+                ZipCode = registerVM.ZipCode,
                 UserName = registerVM.UserName,
             };
             // ApplicationUser applicationUser = registerVM.Adapt<ApplicationUser>();
@@ -57,6 +65,8 @@ namespace CinemaTime.Areas.Identity.Controllers
                 return View(registerVM);
 
             }
+         await   _userManager.AddToRoleAsync(applicationUser, SD.CustomerRole);
+
             var token=await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
           var Link=  Url.Action("ConfirmEmail", "Account", new { area = "Identity", token = token ,UserId = applicationUser.Id},Request.Scheme);
            await _emailSender.SendEmailAsync(applicationUser.Email, "Confirm Your Email", $"<h1>Confirm Your Email By Click Here<a href='{Link}'>Here</a></h1>");
@@ -86,6 +96,7 @@ namespace CinemaTime.Areas.Identity.Controllers
 
         }
         [HttpGet]
+        [UserAuthenticatedFilter]
         public IActionResult Login()
         {
             return View();
@@ -118,6 +129,13 @@ namespace CinemaTime.Areas.Identity.Controllers
             if (!user.EmailConfirmed)
             {
                 TempData["error-notification"] = "Confirm Your Email First";
+
+
+                return View(loginVM);
+            }
+            if (!user.LockoutEnabled)
+            {
+                TempData["error-notification"] = $"You Have Block till{user.LockoutEnd} ";
 
 
                 return View(loginVM);
@@ -271,6 +289,11 @@ namespace CinemaTime.Areas.Identity.Controllers
             await _userManager.ResetPasswordAsync(user, token, newPasswordVM.Password);
 
             TempData["success-notification"] = "Change Password Successfully!";
+            return RedirectToAction("Login", "Account", new { area = "Identity" });
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account", new { area = "Identity" });
         }
     }

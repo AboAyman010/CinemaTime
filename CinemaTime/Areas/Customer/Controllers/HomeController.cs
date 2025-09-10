@@ -15,7 +15,10 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
+    public IActionResult NotFoundPage()
+    {
+        return View();
+    }
     public IActionResult Index(MovieFilterVM movieFilterVM, int page = 1)
     {
         var Movie = _Context.Movies.Include(e => e.Category).Include(m => m.Sessions)

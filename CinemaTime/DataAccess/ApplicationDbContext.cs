@@ -132,7 +132,6 @@ namespace CinemaTime.DataAccess
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
         }
-        public DbSet<CinemaTime.Models.ViewModel.NewPasswordVM> NewPasswordVM { get; set; } = default!;
       
       
     }

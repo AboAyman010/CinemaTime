@@ -1,6 +1,7 @@
 ﻿using CinemaTime.DataAccess;
 using CinemaTime.Models;
 using CinemaTime.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 namespace CinemaTime.Areas.Admin.Controllers
 {
     [Area(SD.AdminArea)]
+    [Authorize(Roles = $"{SD.SuperAdminRole},{SD.AdminArea}")]
+
 
     public class MovieController : Controller
     {

@@ -2,6 +2,7 @@
 using CinemaTime.IRepositories;
 using CinemaTime.Models;
 using CinemaTime.Repositories.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Core.Types;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 namespace CinemaTime.Areas.Admin.Controllers
 {
     [Area(SD.AdminArea)]
+    [Authorize(Roles = $"{SD.SuperAdminRole},{SD.AdminArea}")]
+
     public class CategoryController : Controller
     {
         //private ApplicationDbContext _context = new();
