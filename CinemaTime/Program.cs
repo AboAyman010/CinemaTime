@@ -68,6 +68,8 @@ namespace CinemaTime
             app.UseAuthorization();
 
             app.UseSession();
+           
+
 
             var scope = app.Services.CreateScope();
             var service = scope.ServiceProvider.GetService<IDBInitializer>();

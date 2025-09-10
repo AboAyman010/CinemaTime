@@ -31,11 +31,12 @@ namespace CinemaTime.Areas.Identity.Controllers
             return View(updateUser);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateInfo(UpdatePersonalInfoVM updatePersonalInfoVM)
+        public async Task<IActionResult> UpdateInfo(UpdatePersonalInfoVM updatePersonalInfoVM )
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", updatePersonalInfoVM);
+                return View(updatePersonalInfoVM);
+
             }
 
             var user = await _userManager.GetUserAsync(User);
@@ -51,6 +52,7 @@ namespace CinemaTime.Areas.Identity.Controllers
             user.State = updatePersonalInfoVM.State;
             user.City = updatePersonalInfoVM.City;
             user.ZipCode = updatePersonalInfoVM.ZipCode;
+            
 
             // التعامل مع رفع الصورة
             if (updatePersonalInfoVM.ProfileImage != null)

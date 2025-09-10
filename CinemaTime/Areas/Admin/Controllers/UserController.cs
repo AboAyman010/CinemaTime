@@ -47,5 +47,26 @@ namespace CinemaTime.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(ApplicationUser user, string password)
+        {
+            if (!ModelState.IsValid)
+                return View(user);
+
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                TempData["success-notification"] = "User created successfully";
+                return RedirectToAction(nameof(Index));
+            }
+
+            TempData["error-notification"] = string.Join(", ", result.Errors.Select(e => e.Description));
+            return View(user);
+        }
+
     }
 }
