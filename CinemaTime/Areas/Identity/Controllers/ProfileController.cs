@@ -27,7 +27,7 @@ namespace CinemaTime.Areas.Identity.Controllers
                 return NotFound();
 
             var updateUser = user.Adapt<UpdatePersonalInfoVM>();
-            updateUser.ExistingImage = user.ProfilePicture; // ✅ إضافة دي
+            updateUser.ExistingImage = user.ProfilePicture; 
             return View(updateUser);
 
         }
@@ -44,7 +44,7 @@ namespace CinemaTime.Areas.Identity.Controllers
             if (user is null)
                 return NotFound();
 
-            // ✅ تحديث البيانات الأساسية
+           
             user.Name = updatePersonalInfoVM.Name;
             user.Email = updatePersonalInfoVM.Email;
             user.PhoneNumber = updatePersonalInfoVM.PhoneNumber;
@@ -53,7 +53,7 @@ namespace CinemaTime.Areas.Identity.Controllers
             user.City = updatePersonalInfoVM.City;
             user.ZipCode = updatePersonalInfoVM.ZipCode;
 
-            // ✅ التعامل مع رفع الصورة
+         
             if (updatePersonalInfoVM.ProfileImage != null && updatePersonalInfoVM.ProfileImage.Length > 0)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
@@ -85,7 +85,7 @@ namespace CinemaTime.Areas.Identity.Controllers
                 user.ProfilePicture = uniqueFileName;
             }
 
-            // ✅ تحديث المستخدم
+            //  تحديث المستخدم
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)
             {
@@ -96,7 +96,7 @@ namespace CinemaTime.Areas.Identity.Controllers
                 return View("Index", updatePersonalInfoVM);
             }
 
-            // ✅ تغيير الباسورد لو المستخدم دخّل القديم والجديد
+            //  تغيير الباسورد لو المستخدم دخّل القديم والجديد
             if (!string.IsNullOrWhiteSpace(updatePersonalInfoVM.CurrentPassword) &&
                 !string.IsNullOrWhiteSpace(updatePersonalInfoVM.NewPassword))
             {
@@ -116,7 +116,7 @@ namespace CinemaTime.Areas.Identity.Controllers
                 }
             }
 
-            // ✅ تمرير الصورة الحالية عشان تعرض في الـ View
+            //  تمرير الصورة الحالية عشان تعرض في الـ View
             updatePersonalInfoVM.ExistingImage = user.ProfilePicture;
 
             return RedirectToAction(nameof(Index), "Profile", new { area = "Identity" });
