@@ -9,8 +9,22 @@
 					<div class="account-settings">
 						<div class="user-profile">
 							<div class="user-avatar">
-								<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+								@if (!string.IsNullOrEmpty(Model.ExistingImage))
+								{
+									<img src="~/Images/@Model.ExistingImage"
+										 alt="Profile Picture"
+										 class="img-thumbnail"
+										 style="max-width:200px;" />
+								}
+								else
+								{
+									<img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+										 alt="Default Profile"
+										 class="img-thumbnail"
+										 style="max-width:200px;" />
+								}
 							</div>
+
 							<h5 class="user-name">@Model.Name</h5>
 							<h6 class="user-email">@Model.Email</h6>
 						</div>

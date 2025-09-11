@@ -12,7 +12,7 @@ namespace CinemaTime.Models
         public string? City { get; set; }
         public string? State { get; set; }
         public string? ZipCode { get; set; }
-        public string ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
     }
 }

@@ -61,14 +61,17 @@ namespace CinemaTime
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
             app.UseRouting();
 
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+
             app.UseSession();
-           
+
 
 
             var scope = app.Services.CreateScope();
