@@ -15,3 +15,11 @@
         </li>
     }
 </ul>
+<form asp-controller="Cart" asp-action="AddToCart" method="post">
+    <input type="hidden" name="MovieId" value="@Model.MovieId" />
+    <input class="form-control text-center me-3" id="inputQuantity" name="Count" type="number" value="1" style="max-width: 3rem" />
+    <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+        <i class="bi-cart-fill me-1"></i>
+        Add to cart
+    </button>
+</form>

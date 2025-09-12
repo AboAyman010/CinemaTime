@@ -25,6 +25,7 @@ namespace CinemaTime.DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<MovieImage> MovieImages { get; set; }
         public DbSet<UserOTP> UserOTPs { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -130,7 +131,7 @@ namespace CinemaTime.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=CinemaTime2;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;");
         }
       
       

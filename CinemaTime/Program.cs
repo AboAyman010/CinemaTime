@@ -44,6 +44,8 @@ namespace CinemaTime
             builder.Services.AddScoped< IMovieRepositories,MovieRepositories>();
             builder.Services.AddScoped<IRepository<UserOTP>, Repository<UserOTP>>();
             builder.Services.AddScoped<IDBInitializer, DBInitializer>();
+            builder.Services.AddScoped<IRepository<Cart>, Repository<Cart>>();
+
             builder.Services.AddSession(option =>
             {
                 option.IdleTimeout = TimeSpan.FromMinutes(50);
